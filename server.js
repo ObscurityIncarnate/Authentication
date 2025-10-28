@@ -1,21 +1,27 @@
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
+import morgan from "morgan";
 import "dotenv/config"
 
+import authrouter from "./controller/auth.js";
+import users from "./models/users.js";
 const app = express();
 
-import authrouter from "./controller/auth.js";
-// Middleware
 
+
+// Middleware
+app.use(morgan("dev"))
 app.use(express.urlencoded());
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }));
-app.use("/auth", authrouter);
+
+
 const connect = ()=>{
     try {
         mongoose.connect(process.env.MONGODB_URI);
@@ -28,7 +34,7 @@ const connect = ()=>{
 app.get("/", (req, res)=>{
     res.render("index")
 })
-
+app.use("/auth", authrouter);
 //server startup
 
 app.listen(3000,()=>{

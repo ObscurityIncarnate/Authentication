@@ -1,0 +1,17 @@
+body{
+
+}
+.container{
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    justify-self: center;
+    align-self: center;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
