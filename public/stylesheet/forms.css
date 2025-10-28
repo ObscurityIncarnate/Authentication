@@ -2,7 +2,7 @@ body{
 
 }
 .container{
-    background-color: blue;
+    border: 3px solid blue;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -12,6 +12,21 @@ body{
     padding: 50px;
     justify-self: center;
     align-self: center;
-    color: white;
+    color: blue;
     font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+.form-elem{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 20px;
+}
+.container button[type ="submit"]{
+    background-color: transparent;
+    border: 3px solid blue;
+    color: blue;
+    padding: 10px;
+    border-radius: 16px;
 }
