@@ -20,7 +20,11 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-
+const passUserToRoutes = (req, res, next)=>{
+    res.locals.user =  req.session.user
+    next();
+}
+app.use(passUserToRoutes);
 
 const connect = ()=>{
     try {
