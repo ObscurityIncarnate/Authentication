@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 import session from "express-session";
 import morgan from "morgan";
 import "dotenv/config"
-
+import MongoStore from "connect-mongo";
 import authrouter from "./controller/auth.js";
 import users from "./models/users.js";
+import passUserToRoutes from "./middleware/pass_user_to_view.js";
 const app = express();
 
 
@@ -18,12 +19,10 @@ app.use(express.static("public"));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
 }));
-const passUserToRoutes = (req, res, next)=>{
-    res.locals.user =  req.session.user
-    next();
-}
+
 app.use(passUserToRoutes);
 
 const connect = ()=>{
