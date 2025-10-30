@@ -46,7 +46,7 @@ router.post("/sign-up", async(req, res)=>{
         users.create(req.body)
         console.log("User created Successfully")
     } catch (error) {
-        req.status(400).send("Failed to create the account");
+        res.status(400).send("Failed to create the account");
     }
 });
 
