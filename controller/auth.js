@@ -41,21 +41,22 @@ router.post("/sign-up", isSignedOut, async(req, res)=>{
         const password =  req.body.password;
         const username =  req.body.username;
         if(await users.findOne({email: email})){
-            return res.status(409).send("Email has already been used");
-        } 
-        if(await users.findOne({username: username})){
-            return res.status(409).send("Username is Already Taken");
-        } 
-        if(password !== req.body["confirm-password"]){
-            return res.status(409).send("Passwords do not match");
-        } 
+            throw new Error("Email Already taken");
+        }
+        if(await users.findOne({username: username})){ 
+            throw new Error("Username Already taken");
+        }
+        if(password !== req.body["confirm-password"]){ 
+            throw new Error("Passwords do not match");
+        }
 
         req.body.password = await bcrypt.hash(password, 12);
         console.log(req.body)
         await users.create(req.body)
+        res.redirect("/")
         console.log("User created Successfully")
     } catch (error) {
-        res.status(400).send("Failed to create the account");
+        res.render("auth/sign-up", {error: error.message})  ;
     }
 });
 

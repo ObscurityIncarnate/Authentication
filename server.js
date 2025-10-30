@@ -7,6 +7,7 @@ import MongoStore from "connect-mongo";
 import authrouter from "./controller/auth.js";
 import users from "./models/users.js";
 import passUserToRoutes from "./middleware/pass_user_to_view.js";
+import passErrorToView from "./middleware/pass_error_to_view.js";
 const app = express();
 
 
@@ -24,7 +25,7 @@ app.use(session({
 }));
 
 app.use(passUserToRoutes);
-
+app.use(passErrorToView);
 const connect = ()=>{
     try {
         mongoose.connect(process.env.MONGODB_URI);
