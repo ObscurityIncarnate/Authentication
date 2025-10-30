@@ -36,7 +36,7 @@ router.post("/sign-up", async(req, res)=>{
     try {
         const email = req.body.email;
         const password =  req.body.password;
-        const username =  req.body.password;
+        const username =  req.body.username;
         if(await users.findOne({email: email})) res.status(409).send("Email has already been used");
         if(await users.findOne({username: username})) res.status(409).send("Username is Already Taken");
         if(password !== req.body["confirm-password"]) res.status(409).send("Passwords do not match");
