@@ -43,7 +43,7 @@ router.post("/sign-up", async(req, res)=>{
 
         req.body.password = await bcrypt.hash(password, 12);
         console.log(req.body)
-        users.create(req.body)
+        await users.create(req.body)
         console.log("User created Successfully")
     } catch (error) {
         res.status(400).send("Failed to create the account");
@@ -51,6 +51,9 @@ router.post("/sign-up", async(req, res)=>{
 });
 
 router.post("/sign-out", isSignedIn, (req, res)=>{
-    res.redirect("/")
+    req.session.destroy(()=>{
+        res.redirect("/")
+    })
+    
 });
 export default router
