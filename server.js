@@ -33,7 +33,7 @@ const connect = ()=>{
         console.log("🚨Failed to connect to Database🚨");
     }
 }
-
+connect();
 app.get("/", (req, res)=>{
     res.render("index")
 })

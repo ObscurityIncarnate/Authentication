@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/sign-in",isSignedOut, async (req, res)=>{
     res.render("auth/sign-in");
 });
-router.post("/sign-in",async (req, res)=>{
+router.post("/sign-in",isSignedOut, async (req, res)=>{
     
     try {
         const username = req.body.username
@@ -32,14 +32,14 @@ router.post("/sign-in",async (req, res)=>{
 router.get("/sign-up", isSignedOut, (req, res)=>{
     res.render("auth/sign-up");
 });
-router.post("/sign-up", async(req, res)=>{
+router.post("/sign-up", isSignedOut, async(req, res)=>{
     try {
         const email = req.body.email;
         const password =  req.body.password;
         const username =  req.body.username;
-        if(await users.findOne({email: email})) res.status(409).send("Email has already been used");
-        if(await users.findOne({username: username})) res.status(409).send("Username is Already Taken");
-        if(password !== req.body["confirm-password"]) res.status(409).send("Passwords do not match");
+        if(await users.findOne({email: email})){res.status(409).send("Email has already been used");} 
+        if(await users.findOne({username: username})){res.status(409).send("Username is Already Taken");} 
+        if(password !== req.body["confirm-password"]){res.status(409).send("Passwords do not match");} 
 
         req.body.password = await bcrypt.hash(password, 12);
         console.log(req.body)
