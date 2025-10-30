@@ -50,7 +50,7 @@ router.post("/sign-up", isSignedOut, async(req, res)=>{
     }
 });
 
-router.post("/sign-out", isSignedIn, (req, res)=>{
+router.get("/sign-out", isSignedIn, (req, res)=>{
     req.session.destroy(()=>{
         res.redirect("/")
     })
