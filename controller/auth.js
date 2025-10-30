@@ -14,10 +14,10 @@ router.post("/sign-in",isSignedOut, async (req, res)=>{
         const username = req.body.username
         const user = await users.findOne({username: username});
         if(!user){
-            return res.status(401).send("Invalid Username")
+            throw new Error("Invalid Username");
         };
         if(!bcrypt.compareSync(req.body.password, user.password )){
-            return res.status(401).send("Invalid Password")
+            throw new Error("Invalid Password");
         };
 
         req.session.user = {
@@ -29,7 +29,7 @@ router.post("/sign-in",isSignedOut, async (req, res)=>{
             res.redirect("/")
         })
     } catch (error) {
-        res.status(500).send("Something went wrong. Unable to sign in");
+        res.render("auth/sign-in", {error: error.message})  ;
     }
 });
 router.get("/sign-up", isSignedOut, (req, res)=>{

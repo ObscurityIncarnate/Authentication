@@ -22,9 +22,12 @@
             
             
             <button type="submit">Sign in</button>
-        </form>
+        </form>  
         <p>Or sign up</p>
         <a href="/auth/sign-up">Sign Up</a>
+        <% if(error){ %>
+            <p class="error-message"><%=error%></p>
+        <% } %>
     </div>
     <div id="decoration">
 
